@@ -15,7 +15,17 @@ class CreateTypesTable extends Migration
     {
         Schema::create('types', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('Brand_id');
+            $table->string('name', 30);
+            $table->string('image', 100);
+            $table->integer('number_doors');
+            $table->integer('places');
+            $table->boolean('air_bag');
+            $table->boolean('abs');
             $table->timestamps();
+
+            //foreign key (constraints)
+            $table->foreign('brand_id')->references('id')->on('brands');
         });
     }
 

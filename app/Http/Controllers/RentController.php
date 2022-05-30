@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Tenancy;
-use App\Http\Requests\StoreTenancyRequest;
-use App\Http\Requests\UpdateTenancyRequest;
+use App\Models\Rent;
+use App\Http\Requests\StoreRentRequest;
+use App\Http\Requests\UpdateRentRequest;
 
-class TenancyController extends Controller
+class RentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -31,10 +31,10 @@ class TenancyController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreTenancyRequest  $request
+     * @param  \App\Http\Requests\StoreRentRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreTenancyRequest $request)
+    public function store(StoreRentRequest $request)
     {
         //
     }
@@ -42,10 +42,10 @@ class TenancyController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Tenancy  $tenancy
+     * @param  \App\Models\Rent  $rent
      * @return \Illuminate\Http\Response
      */
-    public function show(Tenancy $tenancy)
+    public function show(Rent $rent)
     {
         //
     }
@@ -53,10 +53,10 @@ class TenancyController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Tenancy  $tenancy
+     * @param  \App\Models\Rent  $rent
      * @return \Illuminate\Http\Response
      */
-    public function edit(Tenancy $tenancy)
+    public function edit(Rent $rent)
     {
         //
     }
@@ -64,11 +64,11 @@ class TenancyController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateTenancyRequest  $request
-     * @param  \App\Models\Tenancy  $tenancy
+     * @param  \App\Http\Requests\UpdateRentRequest  $request
+     * @param  \App\Models\Rent  $rent
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateTenancyRequest $request, Tenancy $tenancy)
+    public function update(UpdateRentRequest $request, Rent $rent)
     {
         //
     }
@@ -76,10 +76,10 @@ class TenancyController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Tenancy  $tenancy
+     * @param  \App\Models\Rent  $rent
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Tenancy $tenancy)
+    public function destroy(Rent $rent)
     {
         //
     }

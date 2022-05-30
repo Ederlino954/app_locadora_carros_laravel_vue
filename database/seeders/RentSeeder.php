@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-class TenancySeeder extends Seeder
+class RentSeeder extends Seeder
 {
     /**
      * Run the database seeds.
