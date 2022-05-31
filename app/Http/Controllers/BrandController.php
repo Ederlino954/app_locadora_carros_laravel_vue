@@ -71,7 +71,7 @@ class BrandController extends Controller
             $request->validate($brand->rules(), $brand->feedback());
         }
 
-        // remove um aruivo antigo caso tenha sido enviado uma imagem no request
+        // remove um arquivo antigo caso tenha sido enviado uma imagem no request
         if ($request->file('image')) {
             Storage::disk('public')->delete($brand->image);
         }

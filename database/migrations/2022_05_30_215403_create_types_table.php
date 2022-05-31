@@ -15,7 +15,7 @@ class CreateTypesTable extends Migration
     {
         Schema::create('types', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('Brand_id');
+            $table->unsignedBigInteger('brand_id');
             $table->string('name', 30);
             $table->string('image', 100);
             $table->integer('number_doors');
