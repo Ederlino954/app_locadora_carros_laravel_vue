@@ -39,6 +39,8 @@ class BrandController extends Controller
 
     public function destroy(Brand $brand)
     {
-        //
+        // print_r($brand->getAttributes());
+        $brand->delete();
+        return ['msg' => 'A marca foi removida com sucesso!'];
     }
 }
