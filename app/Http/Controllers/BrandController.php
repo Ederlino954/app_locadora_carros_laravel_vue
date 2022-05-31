@@ -52,7 +52,26 @@ class BrandController extends Controller
             return response()->json(['erro' => 'Não foi possível realizar a solicitaçaõ, o recurso solicitado não existe'], 404);
         }
 
-        $request->validate($brand->rules(), $brand->feedback());
+        if($request->method() === 'PATCH') {
+
+            $dynamicRules = array();
+
+            //  percorrendo todas as regras definidas no model
+            foreach ($brand->rules() as $input => $rule) {
+
+                // coletar apenas as regras aplicáveis aos paramentros parciais da reuisição
+                if(array_key_exists($input, $request->all())) {
+                    $dynamicRules[$input] = $rule;
+                }
+            }
+
+            $request->validate($dynamicRules, $brand->feedback());
+
+        } else {
+            $request->validate($brand->rules(), $brand->feedback());
+        }
+
+
         $brand->update($request->all());
         return response()->json($brand, 200);
     }
