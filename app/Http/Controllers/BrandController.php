@@ -9,12 +9,13 @@ class BrandController extends Controller
 {
     public function index()
     {
-        //
+
     }
 
     public function store(Request $request)
     {
-        //
+        $marca = Brand::create($request->all());
+        return $marca;
     }
 
     public function show(Brand $brand)
