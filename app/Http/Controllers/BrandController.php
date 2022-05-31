@@ -22,18 +22,23 @@ class BrandController extends Controller
     public function store(Request $request)
     {
         // $brand = Brand::create($request->all());
-        $regras = [
-            'name' => 'required|string|max:255',
-            'image' => 'required|string|max:255',
+        $regras = [ // Accept application/json para validações funcionarem nas APIs
+            'name' => ['required','string','max:30', 'unique:brands'],
+            'image' => ['required','string','max:100'],
         ];
 
         $feedback = [
-            'required' => 'O campo :attribute é obrigatório',
-            'string' => 'O campo :attribute deve ser uma string',
-            'max' => 'O campo :attribute deve ter no máximo :max caracteres',
+            'name.required' => 'O campo nome é obrigatório',
+            'name.string' => 'O campo nome deve ser uma string',
+            'name.max' => 'O campo nome deve ter no máximo 10300 caracteres',
+            'name.unique' => 'O campo nome deve ser único',
+            'image.required' => 'O campo imagem é obrigatório',
+            'image.string' => 'O campo imagem deve ser uma string',
+            'image.max' => 'O campo imagem deve ter no máximo 100 caracteres',
         ];
 
         $request->validate($regras, $feedback);
+        // stateless = cada requisição é um novo objeto
 
         $brand = $this->brand->create($request->all());
         return response()->json($brand, 201);
