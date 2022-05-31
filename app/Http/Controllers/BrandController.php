@@ -14,8 +14,9 @@ class BrandController extends Controller
     public function index()
     {
         // $brands = Brand::all();
-        $brands = $this->brand->all();
-        return $brands;
+
+        $brand = $this->brand->all();
+        return $brand;
     }
 
     public function store(Request $request)
@@ -29,6 +30,9 @@ class BrandController extends Controller
     public function show($id)
     {
         $brand = $this->brand->find($id);
+        if($brand === null) {
+            return ['erro' => 'recurso pesquisado não existe'];
+        }
         return $brand;
     }
 
@@ -41,6 +45,11 @@ class BrandController extends Controller
         // $brand->update($request->all());
 
         $brand = $this->brand->find($id);
+
+        if ($brand === null) {
+            return ['erro' => 'Não foi possível realizar a solicitaçaõ, o recurso solicitado não existe'];
+        }
+
         $brand->update($request->all());
         return $brand;
     }
@@ -51,6 +60,11 @@ class BrandController extends Controller
         // $brand->delete();
 
         $brand = $this->brand->find($id);
+
+        if ($brand === null) {
+            return ['erro' => 'Não foi possível realizar a exclusão, o recurso solicitado não existe'];
+        }
+
         $brand->delete();
         return ['msg' => 'A marca foi removida com sucesso!'];
     }
