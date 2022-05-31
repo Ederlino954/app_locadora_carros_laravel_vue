@@ -14,7 +14,7 @@ class TypeController extends Controller
 
     public function index()
     {
-        return response()->json($this->type->all(), 200);
+        return response()->json($this->type->with('brand')->get(), 200);
     }
 
     public function store(Request $request)
@@ -40,7 +40,7 @@ class TypeController extends Controller
 
     public function show($id)
     {
-        $type = $this->type->find($id);
+        $type = $this->type->with('brand')->find($id);
         if($type === null) {
             return response()->json(['erro' => 'recurso pesquisado não existe'], 404);
         }

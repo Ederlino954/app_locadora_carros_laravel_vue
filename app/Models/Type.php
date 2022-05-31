@@ -58,5 +58,10 @@ class Type extends Model
         ];
     }
 
+    public function brand()  // um TYPE pertence a uma Brand // Tabela TYPE é a mais fraca do relacionamento
+    {
+        // return $this->belongsTo(Brand::class);
+        return $this->belongsTo('App\Models\Brand');
+    }
 
 }

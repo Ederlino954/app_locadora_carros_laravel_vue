@@ -14,7 +14,7 @@ class BrandController extends Controller
 
     public function index()
     {
-        $brand = $this->brand->all();
+        $brand = $this->brand->with('types')->get();
         return response()->json($brand, 200);
     }
 
@@ -35,7 +35,7 @@ class BrandController extends Controller
     }
     public function show($id)
     {
-        $brand = $this->brand->find($id);
+        $brand = $this->brand->with('types')->find($id); //with com os relacionamentos
         if($brand === null) {
             return response()->json(['erro' => 'recurso pesquisado não existe'], 404);
         }

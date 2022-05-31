@@ -39,6 +39,10 @@ class Brand extends Model
         ];
     }
 
-
+    public function types() // uma Brand possui muitos Types
+    {
+        // return $this->hasMany(Type::class);
+        return $this->hasMany('App\Models\Type');
+    }
 
 }
