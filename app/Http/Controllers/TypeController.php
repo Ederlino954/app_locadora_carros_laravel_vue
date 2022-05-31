@@ -26,7 +26,7 @@ class TypeController extends Controller
         $image_urn = $image->store('images/types', 'public');
 
         $type = $this->type->create([
-            'brand_id' => $request->name,
+            'brand_id' => $request->brand_id,
             'name' => $request->name,
             'image' => $image_urn,
             'number_doors' => $request->number_doors,
@@ -40,7 +40,7 @@ class TypeController extends Controller
 
     public function show($id)
     {
-        $type = $this->brand->find($id);
+        $type = $this->type->find($id);
         if($type === null) {
             return response()->json(['erro' => 'recurso pesquisado não existe'], 404);
         }
@@ -49,7 +49,7 @@ class TypeController extends Controller
 
     public function update(Request $request, $id)
     {
-        // para atualizar quando for formdata uliliza-se POST e no front com _method no cabeçalho PUT ou PATCH
+        // para atualizar quando for formdata uliliza-se (POST) e no front com (_method) no cabeçalho (PUT ou PATCH)
         // PUT tem o intuito semantico de atualizar todo conteudo //PATCH intuito semantico de atualizar parte do conteudo
         $type = $this->type->find($id);
 
@@ -57,7 +57,7 @@ class TypeController extends Controller
             return response()->json(['erro' => 'Não foi possível realizar a solicitaçaõ, o recurso solicitado não existe'], 404);
         }
 
-        if($request->method() === 'PATCH') {
+        if($request->method() === 'PATCH') { // verificar atualização deste trecho ///////
 
             $dynamicRules = array();
 
@@ -85,7 +85,7 @@ class TypeController extends Controller
         $image_urn = $image->store('images/types', 'public');
 
         $type->update([
-            'brand_id' => $request->name,
+            'brand_id' => $request->brand_id,
             'name' => $request->name,
             'image' => $image_urn,
             'number_doors' => $request->number_doors,
