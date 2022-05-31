@@ -9,4 +9,29 @@ class Brand extends Model
 {
     use HasFactory;
     protected $fillable = ['name', 'image'];
+
+    public function rules()
+    {
+        return [ // Accept application/json para validações funcionarem nas APIs
+            'name' => ['required','string','min:3','max:30', 'unique:brands'],
+            'image' => ['required','string','max:100'],
+        ];
+    }
+
+    public function feedback()
+    {
+        return [
+            'name.required' => 'O campo nome é obrigatório',
+            'name.string' => 'O campo nome deve ser uma string',
+            'name.min' => 'O campo nome deve ter no mínimo 3 caracteres',
+            'name.max' => 'O campo nome deve ter no máximo 30 caracteres',
+            'name.unique' => 'O campo nome deve ser único',
+            'image.required' => 'O campo imagem é obrigatório',
+            'image.string' => 'O campo imagem deve ser uma string',
+            'image.max' => 'O campo imagem deve ter no máximo 100 caracteres',
+        ];
+    }
+
+    
+
 }
