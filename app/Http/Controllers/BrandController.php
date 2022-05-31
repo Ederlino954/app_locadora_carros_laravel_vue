@@ -27,7 +27,14 @@ class BrandController extends Controller
 
     public function update(Request $request, Brand $brand)
     {
-        //
+        // print_r($request->all()); // dado satualizados
+        // echo '<hr>';
+        // print_r($brand->getAttributes()); /// dados antigos
+
+        // PUT tem o intuito semantico de atualizar todo conteudo //PATCH intuito semantico de atualizar parte do conteudo
+
+        $brand->update($request->all());
+        return $brand;
     }
 
     public function destroy(Brand $brand)
