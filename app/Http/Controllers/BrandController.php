@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Storage;
 use App\Models\Brand;
 use Illuminate\Http\Request;
 
@@ -70,6 +71,11 @@ class BrandController extends Controller
             $request->validate($brand->rules(), $brand->feedback());
         }
 
+        // remove um aruivo antigo caso tenha sido enviado uma imagem no request
+        if ($request->file('image')) {
+            Storage::disk('public')->delete($brand->image);
+        }
+
         $image = $request->file('image');
         $image_urn = $image->store('images', 'public');
 
@@ -88,6 +94,9 @@ class BrandController extends Controller
         if ($brand === null) {
             return response()->json(['erro' => 'Não foi possível realizar a exclusão, o recurso solicitado não existe'], 404);
         }
+
+        // remove o arquivo
+        Storage::disk('public')->delete($brand->image);
 
         $brand->delete();
         return response()->json(['msg' => 'A marca foi removida com sucesso!'], 200);
