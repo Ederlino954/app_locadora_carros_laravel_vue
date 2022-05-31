@@ -84,15 +84,20 @@ class TypeController extends Controller
         $image = $request->file('image');
         $image_urn = $image->store('images/types', 'public');
 
-        $type->update([
-            'brand_id' => $request->brand_id,
-            'name' => $request->name,
-            'image' => $image_urn,
-            'number_doors' => $request->number_doors,
-            'places' => $request->places,
-            'air_bag' => $request->air_bag,
-            'abs' => $request->abs,
-        ]);
+        $type->fill($request->all());
+        $type->image = $image_urn;
+
+        $type->save();
+
+        // $type->update([
+        //     'brand_id' => $request->brand_id,
+        //     'name' => $request->name,
+        //     'image' => $image_urn,
+        //     'number_doors' => $request->number_doors,
+        //     'places' => $request->places,
+        //     'air_bag' => $request->air_bag,
+        //     'abs' => $request->abs,
+        // ]);
 
         return response()->json($type, 200);
     }

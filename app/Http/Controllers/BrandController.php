@@ -79,10 +79,16 @@ class BrandController extends Controller
         $image = $request->file('image');
         $image_urn = $image->store('images', 'public');
 
-        $brand->update([
-            'name' => $request->name,
-            'image' => $image_urn,
-        ]);
+        // preencher o objetop brand com os dados do request
+        $brand->fill($request->all());
+        $brand->image = $image_urn;
+        $brand->save();
+        
+        // dd($brand->getAttributes());
+        // $brand->update([
+        //     'name' => $request->name,
+        //     'image' => $image_urn,
+        // ]);
 
         return response()->json($brand, 200);
     }
