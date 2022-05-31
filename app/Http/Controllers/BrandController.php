@@ -52,8 +52,9 @@ class BrandController extends Controller
             return response()->json(['erro' => 'Não foi possível realizar a solicitaçaõ, o recurso solicitado não existe'], 404);
         }
 
+        $request->validate($brand->rules(), $brand->feedback());
         $brand->update($request->all());
-        return $brand;
+        return response()->json($brand, 200);
     }
 
     public function destroy($id)

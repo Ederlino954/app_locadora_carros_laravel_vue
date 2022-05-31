@@ -13,9 +13,15 @@ class Brand extends Model
     public function rules()
     {
         return [ // Accept application/json para validações funcionarem nas APIs
-            'name' => ['required','string','min:3','max:30', 'unique:brands'],
+            'name' => ['required','string','min:3','max:30','unique:brands,name,'.$this->id.'','max:30'],
             'image' => ['required','string','max:100'],
         ];
+        /**
+         * UNIQUE()
+         * 1 - tabela
+         * 2 - nome da coluna que será verificada
+         * 3 - id que será desconsiderado na pesquisa
+         */
     }
 
     public function feedback()
@@ -32,6 +38,6 @@ class Brand extends Model
         ];
     }
 
-    
+
 
 }
