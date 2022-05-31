@@ -14,7 +14,7 @@ class Brand extends Model
     {
         return [ // Accept application/json para validações funcionarem nas APIs
             'name' => ['required','string','min:3','max:30','unique:brands,name,'.$this->id.'','max:30'],
-            'image' => ['required','string','max:100'],
+            'image' => ['required','max:100'],
         ];
         /**
          * UNIQUE()
@@ -33,7 +33,6 @@ class Brand extends Model
             'name.max' => 'O campo nome deve ter no máximo 30 caracteres',
             'name.unique' => 'O campo nome deve ser único',
             'image.required' => 'O campo imagem é obrigatório',
-            'image.string' => 'O campo imagem deve ser uma string',
             'image.max' => 'O campo imagem deve ter no máximo 100 caracteres',
         ];
     }

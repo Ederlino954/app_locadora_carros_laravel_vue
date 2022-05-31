@@ -24,6 +24,12 @@ class BrandController extends Controller
         // Accept application/json para validações funcionarem nas APIs
         $request->validate($this->brand->rules(), $this->brand->feedback());
 
+        // dd($request->name);
+        // dd($request->get('name'));
+        // dd($request->input('name'));
+        // dd($request->file('image'));
+        // dd($request->image);
+
         $brand = $this->brand->create($request->all());
         return response()->json($brand, 201);
     }
