@@ -29,7 +29,7 @@ class BrandController extends Controller
             'name' => $request->name,
             'image' => $image_urn,
         ]);
-        
+
         return response()->json($brand, 201);
     }
     public function show($id)
@@ -43,6 +43,7 @@ class BrandController extends Controller
 
     public function update(Request $request, $id)
     {
+        // para atualizar quando for formdata uliliza-se POST e no front com _method no cabeçalho PUT ou PATCH
         // PUT tem o intuito semantico de atualizar todo conteudo //PATCH intuito semantico de atualizar parte do conteudo
         $brand = $this->brand->find($id);
 
@@ -69,8 +70,14 @@ class BrandController extends Controller
             $request->validate($brand->rules(), $brand->feedback());
         }
 
+        $image = $request->file('image');
+        $image_urn = $image->store('images', 'public');
 
-        $brand->update($request->all());
+        $brand->update([
+            'name' => $request->name,
+            'image' => $image_urn,
+        ]);
+
         return response()->json($brand, 200);
     }
 
