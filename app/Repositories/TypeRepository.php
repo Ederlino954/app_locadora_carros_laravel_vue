@@ -6,10 +6,4 @@ class TypeRepository extends AbstractRepository {
 
 }
 
-
-
-
-
-
-
 ?>
