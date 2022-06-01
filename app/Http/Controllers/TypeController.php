@@ -12,9 +12,22 @@ class TypeController extends Controller
         $this->type = $type;
     }
 
-    public function index()
+    public function index(Request $request )
     {
-        return response()->json($this->type->with('brand')->get(), 200);
+        $models = array();
+
+        // dd($request->get('attributes')); // carregou os atributos de attributes na url ///http://127.0.0.1:8000/api/type?attribut=id,name,image
+        // http://127.0.0.1:8000/api/type?attribut=id,name,image,brand_id
+        if($request->has('attribut')) {
+            $attribut = $request->attribut;
+            $models = $this->type->selectRaw($attribut)->with('brand')->get();
+        } else {
+            $models = $this->type->with('brand')->get();
+        }
+
+        //  $this->type->with('brand')->get()
+
+        return response()->json($models , 200);
     }
 
     public function store(Request $request)
@@ -57,7 +70,7 @@ class TypeController extends Controller
             return response()->json(['erro' => 'Não foi possível realizar a solicitaçaõ, o recurso solicitado não existe'], 404);
         }
 
-        if($request->method() === 'PATCH') { // verificar atualização deste trecho ///////
+        if($request->method() === 'PATCH') {
 
             $dynamicRules = array();
 
