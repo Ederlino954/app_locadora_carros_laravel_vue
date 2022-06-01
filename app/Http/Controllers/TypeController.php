@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Type;
+use App\Repositories\TypeRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -14,41 +15,28 @@ class TypeController extends Controller
 
     public function index(Request $request )
     {
-        // dd($request->get('attribut')); // carregou os atributos de attribut na url ///http://127.0.0.1:8000/api/type?attribut=id,name,image
-        //  http://127.0.0.1:8000/api/type?attribut=id,name,image,brand_id
-        //  http://127.0.0.1:8000/api/type?attribut=id,name,image,places,brand_id&attributes_brand=name,image
-        //  http://127.0.0.1:8000/api/type?attributes_brand=image
-        //  http://127.0.0.1:8000/api/type?attribut=id,name,image,places,brand_id&attributes_brand=name&filt=name:like:hyundai%
-        //  http://127.0.0.1:8000/api/type?attribut=id,name,image,places,brand_id&attributes_brand=name&filt=number_doors:=:2
-        //  http://127.0.0.1:8000/api/type?attribut=id,name,image,places,brand_id&attributes_brand=name&filt=abs:=:1;name:like:Ford%;number_doors:=:4
+        // http://127.0.0.1:8000/api/type/?attribut=id,name
+        // http://127.0.0.1:8000/api/type/?attribut=id,name&attributes_brand=name
+        // http://127.0.0.1:8000/api/type/?attribut=id,name&attributes_brand=name&filt=name:like:h%
 
-        $models = array();
+        $typeRepository = new TypeRepository($this->type);
 
-        if($request->has('attributes_brand')) {
-            $attributes_brand = $request->attributes_brand;
-            $models = $this->type->with('brand:id,'.$attributes_brand);
+        if($request->has('attributes_brand')) { // um modelo pertence a uma marca
+            $attributes_brand = 'brand:id,'. $request->attributes_brand;
+            $typeRepository->selectAttributesRelatedRecords($attributes_brand);
         } else {
-            $models = $this->type->with('brand');
+            $typeRepository->selectAttributesRelatedRecords('brand');
         }
 
         if ($request->has('filt')) {
-            $filt = explode(';', $request->filt); // divide o grupo de comparações
-            foreach ($filt as $key => $condition) {
-
-                $c = explode(':', $condition);
-                $models = $models->where($c[0], $c[1], $c[2]);
-                
-            }
+            $typeRepository->filt($request->filt);
         }
 
         if($request->has('attribut')) {
-            $attribut = $request->attribut;
-            $models = $models->selectRaw($attribut)->get();
-        } else {
-            $models = $models->get();
+            $typeRepository->selectAttribut($request->attribut);
         }
 
-        return response()->json($models , 200);
+        return response()->json($typeRepository->getResult(), 200);
     }
 
     public function store(Request $request)
