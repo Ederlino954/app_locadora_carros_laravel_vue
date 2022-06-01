@@ -14,15 +14,25 @@ class TypeController extends Controller
 
     public function index(Request $request )
     {
+        // dd($request->get('attributes')); // carregou os atributos de attributes na url ///http://127.0.0.1:8000/api/type?attribut=id,name,image
+        //  http://127.0.0.1:8000/api/type?attribut=id,name,image,brand_id
+        //  http://127.0.0.1:8000/api/type?attribut=id,name,image,places,brand_id&attributes_brand=name,image
+        // http://127.0.0.1:8000/api/type?attributes_brand=image
+
         $models = array();
 
-        // dd($request->get('attributes')); // carregou os atributos de attributes na url ///http://127.0.0.1:8000/api/type?attribut=id,name,image
-        // http://127.0.0.1:8000/api/type?attribut=id,name,image,brand_id
+        if($request->has('attributes_brand')) {
+            $attributes_brand = $request->attributes_brand;
+            $models = $this->type->with('brand:id,'.$attributes_brand);
+        } else {
+            $models = $this->type->with('brand');
+        }
+
         if($request->has('attribut')) {
             $attribut = $request->attribut;
-            $models = $this->type->selectRaw($attribut)->with('brand')->get();
+            $models = $models->selectRaw($attribut)->get();
         } else {
-            $models = $this->type->with('brand')->get();
+            $models = $models->get();
         }
 
         //  $this->type->with('brand')->get()
