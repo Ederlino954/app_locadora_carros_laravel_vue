@@ -14,10 +14,12 @@ class TypeController extends Controller
 
     public function index(Request $request )
     {
-        // dd($request->get('attributes')); // carregou os atributos de attributes na url ///http://127.0.0.1:8000/api/type?attribut=id,name,image
+        // dd($request->get('attribut')); // carregou os atributos de attribut na url ///http://127.0.0.1:8000/api/type?attribut=id,name,image
         //  http://127.0.0.1:8000/api/type?attribut=id,name,image,brand_id
         //  http://127.0.0.1:8000/api/type?attribut=id,name,image,places,brand_id&attributes_brand=name,image
-        // http://127.0.0.1:8000/api/type?attributes_brand=image
+        //  http://127.0.0.1:8000/api/type?attributes_brand=image
+        //  http://127.0.0.1:8000/api/type?attribut=id,name,image,places,brand_id&attributes_brand=name&filt=name:like:hyundai%
+        //  http://127.0.0.1:8000/api/type?attribut=id,name,image,places,brand_id&attributes_brand=name&filt=number_doors:=:2
 
         $models = array();
 
@@ -28,14 +30,18 @@ class TypeController extends Controller
             $models = $this->type->with('brand');
         }
 
+        if ($request->has('filt')) {
+            // dd(explode(':',$request->filt)); // retorna array com explode
+            $coditions = explode(':', $request->filt);
+            $models = $models->where($coditions[0], $coditions[1], $coditions[2]);
+        }
+
         if($request->has('attribut')) {
             $attribut = $request->attribut;
             $models = $models->selectRaw($attribut)->get();
         } else {
             $models = $models->get();
         }
-
-        //  $this->type->with('brand')->get()
 
         return response()->json($models , 200);
     }
@@ -111,16 +117,6 @@ class TypeController extends Controller
         $type->image = $image_urn;
 
         $type->save();
-
-        // $type->update([
-        //     'brand_id' => $request->brand_id,
-        //     'name' => $request->name,
-        //     'image' => $image_urn,
-        //     'number_doors' => $request->number_doors,
-        //     'places' => $request->places,
-        //     'air_bag' => $request->air_bag,
-        //     'abs' => $request->abs,
-        // ]);
 
         return response()->json($type, 200);
     }
