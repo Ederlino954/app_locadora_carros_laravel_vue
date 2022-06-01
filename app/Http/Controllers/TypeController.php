@@ -20,6 +20,7 @@ class TypeController extends Controller
         //  http://127.0.0.1:8000/api/type?attributes_brand=image
         //  http://127.0.0.1:8000/api/type?attribut=id,name,image,places,brand_id&attributes_brand=name&filt=name:like:hyundai%
         //  http://127.0.0.1:8000/api/type?attribut=id,name,image,places,brand_id&attributes_brand=name&filt=number_doors:=:2
+        //  http://127.0.0.1:8000/api/type?attribut=id,name,image,places,brand_id&attributes_brand=name&filt=abs:=:1;name:like:Ford%;number_doors:=:4
 
         $models = array();
 
@@ -31,9 +32,13 @@ class TypeController extends Controller
         }
 
         if ($request->has('filt')) {
-            // dd(explode(':',$request->filt)); // retorna array com explode
-            $coditions = explode(':', $request->filt);
-            $models = $models->where($coditions[0], $coditions[1], $coditions[2]);
+            $filt = explode(';', $request->filt); // divide o grupo de comparações
+            foreach ($filt as $key => $condition) {
+
+                $c = explode(':', $condition);
+                $models = $models->where($c[0], $c[1], $c[2]);
+                
+            }
         }
 
         if($request->has('attribut')) {
