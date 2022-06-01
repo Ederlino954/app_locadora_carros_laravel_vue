@@ -12,10 +12,42 @@ class BrandController extends Controller
         $this->brand = $brand;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $brand = $this->brand->with('types')->get();
-        return response()->json($brand, 200);
+        // http://127.0.0.1:8000/api/brand/?attribut=name,image
+        // http://127.0.0.1:8000/api/brand/?attribut=id,name,image&attributes_types=id,brand_id,name,image
+        // http://127.0.0.1:8000/api/brand/?attribut=id,name,image&attributes_types=id,brand_id,name,image&filt=name:=:Ford
+        // http://127.0.0.1:8000/api/brand/?attribut=id,name,image&attributes_types=id,brand_id,name,image&filt=name:like:h%
+        // http://127.0.0.1:8000/api/brand/?attribut=id,name,image&attributes_types=id,brand_id,name,image&filt=name:like:h%;id:=:15
+
+        $brands = array();
+
+        if($request->has('attributes_types')) {
+            $attributes_types = $request->attributes_types;
+            $brands = $this->brand->with('types:id,'.$attributes_types);
+        } else {
+            $brands = $this->brand->with('types');
+        }
+
+        if ($request->has('filt')) {
+            $filt = explode(';', $request->filt); // divide o grupo de comparações
+            foreach ($filt as $key => $condition) {
+
+                $c = explode(':', $condition);
+                $brands = $brands->where($c[0], $c[1], $c[2]);
+
+            }
+        }
+
+        if($request->has('attribut')) {
+            $attribut = $request->attribut;
+            $brands = $brands->selectRaw($attribut)->get();
+        } else {
+            $brands = $brands->get();
+        }
+
+        // $brand = $this->brand->with('types')->get();
+        return response()->json($brands, 200);
     }
 
     public function store(Request $request)
@@ -83,7 +115,7 @@ class BrandController extends Controller
         $brand->fill($request->all());
         $brand->image = $image_urn;
         $brand->save();
-        
+
         // dd($brand->getAttributes());
         // $brand->update([
         //     'name' => $request->name,
