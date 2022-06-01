@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Storage;
 use App\Models\Brand;
+use App\Repositories\BrandRepository;
 use Illuminate\Http\Request;
 
 class BrandController extends Controller
@@ -18,36 +19,26 @@ class BrandController extends Controller
         // http://127.0.0.1:8000/api/brand/?attribut=id,name,image&attributes_types=id,brand_id,name,image
         // http://127.0.0.1:8000/api/brand/?attribut=id,name,image&attributes_types=id,brand_id,name,image&filt=name:=:Ford
         // http://127.0.0.1:8000/api/brand/?attribut=id,name,image&attributes_types=id,brand_id,name,image&filt=name:like:h%
-        // http://127.0.0.1:8000/api/brand/?attribut=id,name,image&attributes_types=id,brand_id,name,image&filt=name:like:h%;id:=:15
+        // http://127.0.0.1:8000/api/brand/?attribut=id,name,image&attributes_types=id,brand_id,name,image&filt=name:like:h%
 
-        $brands = array();
+        $brandRepository = new BrandRepository($this->brand);
 
         if($request->has('attributes_types')) {
-            $attributes_types = $request->attributes_types;
-            $brands = $this->brand->with('types:id,'.$attributes_types);
+            $attributes_types = 'types:id,'. $request->attributes_types;
+            $brandRepository->selectAttributesRelatedRecords($attributes_types);
         } else {
-            $brands = $this->brand->with('types');
+            $brandRepository->selectAttributesRelatedRecords('types');
         }
 
         if ($request->has('filt')) {
-            $filt = explode(';', $request->filt); // divide o grupo de comparações
-            foreach ($filt as $key => $condition) {
-
-                $c = explode(':', $condition);
-                $brands = $brands->where($c[0], $c[1], $c[2]);
-
-            }
+            $brandRepository->filt($request->filt);
         }
 
         if($request->has('attribut')) {
-            $attribut = $request->attribut;
-            $brands = $brands->selectRaw($attribut)->get();
-        } else {
-            $brands = $brands->get();
+            $brandRepository->selectAttribut($request->attribut);
         }
 
-        // $brand = $this->brand->with('types')->get();
-        return response()->json($brands, 200);
+        return response()->json($brandRepository->getResult(), 200);
     }
 
     public function store(Request $request)
