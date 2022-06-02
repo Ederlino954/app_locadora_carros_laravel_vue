@@ -56,6 +56,7 @@ class BrandController extends Controller
 
         return response()->json($brand, 201);
     }
+
     public function show($id)
     {
         $brand = $this->brand->with('types')->find($id); //with com os relacionamentos
