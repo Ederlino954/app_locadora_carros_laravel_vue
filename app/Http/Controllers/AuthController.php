@@ -13,18 +13,11 @@ class AuthController extends Controller
 
         if ($token) {
             return response()->json(['token' => $token]);
-            // return response()->json([
-            //     'token' => $token,
-            //     'user' => auth('api')->user(),
-            // ]);
         } else {
             return response()->json(['error' => 'Usuário ou senha inválido!'], 403);
-
             // 401 = Unauthorized
             // 403 = Forbidden -> proibido (login inválido!)
         }
-
-        dd($token);
 
         return 'login';
     }
@@ -32,7 +25,8 @@ class AuthController extends Controller
 
     public function logout()
     {
-        return 'logout';
+        auth('api')->logout();
+        return response()->json(['message' => 'Deslogado com sucesso!']);
     }
 
     public function refresh()
