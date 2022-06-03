@@ -10,15 +10,21 @@
 
                         <div class="form-row">
                             <div class="col mb-3">
-                                <label for="inputId" class="form-label">ID</label>
-                                <input type="number" class="form-control" id="inputId" aria-describedby="idHelp" aria-placeholder="ID">
-                                <div id="idHelp" class="form-text text-muted">Opcional. Informe o id do registro</div>
+
+                                <input-container-component title="ID" id="inputId" id-help="idHelp" text-help="Opcional. Informe o id do registro" >
+                                    <input type="number" class="form-control" id="inputId" aria-describedby="idHelp" aria-placeholder="ID">
+                                </input-container-component>
+
                             </div>
+
                             <div class="col mb-3">
-                                <label for="inputNome" class="form-label">Nome</label>
-                                <input type="text" class="form-control" id="inputId" aria-describedby="nomeHelp" aria-placeholder="Nome da marca">
-                                <div id="nomeHelp" class="form-text text-muted">Opcional. Informe o nome da marca</div>
+
+                                <input-container-component title="Nome da Marca" id="inputNome" id-help="nomeHelp" text-help="Opcional. Informe o nome da Marca" >
+                                    <input type="text" class="form-control" id="inputNome" aria-describedby="nomeHelp" aria-placeholder="Nome da Marca">
+                                </input-container-component>
+
                             </div>
+
                         </div>
 
                         <div class="card shadow p-2 mb-2 bg-body rounded">
