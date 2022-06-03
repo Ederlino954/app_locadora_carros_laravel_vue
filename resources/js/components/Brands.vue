@@ -51,7 +51,29 @@
             </div>
 
         </div>
-        <modal-component id="modalBrand" title="Adiconar Marca"></modal-component>
+        
+        <modal-component id="modalBrand" title="Adiconar Marca">
+
+            <template v-slot:content>
+                <div class="form-group">
+                    <input-container-component title="Nome da Marca" id="newName" id-help="newNameHelp" text-help="Opcional. Informe o nome da Marca" >
+                        <input type="text" class="form-control" id="newName" aria-describedby="newNameHelp" aria-placeholder="Nome da Marca">
+                    </input-container-component>
+                </div>
+
+                <div class="form-group">
+                    <input-container-component title="Imagem" id="newImage" id-help="newImageHelp" text-help="Selecioe uma imagem no formato PNG" >
+                        <input type="file" class="form-control-file" id="newImage" aria-describedby="newImageHelp" aria-placeholder="Selecione uma imagem">
+                    </input-container-component>
+                </div>
+            </template>
+
+            <template v-slot:footer>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-primary">Salvar</button>
+            </template>
+
+        </modal-component>
     </div>
 
 </template>

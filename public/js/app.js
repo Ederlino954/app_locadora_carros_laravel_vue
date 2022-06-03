@@ -2118,6 +2118,28 @@ module.exports = {
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /***/ }),
 
@@ -2371,7 +2393,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-//
 //
 //
 //
@@ -38605,6 +38626,97 @@ var render = function () {
       _vm._v(" "),
       _c("modal-component", {
         attrs: { id: "modalBrand", title: "Adiconar Marca" },
+        scopedSlots: _vm._u([
+          {
+            key: "content",
+            fn: function () {
+              return [
+                _c(
+                  "div",
+                  { staticClass: "form-group" },
+                  [
+                    _c(
+                      "input-container-component",
+                      {
+                        attrs: {
+                          title: "Nome da Marca",
+                          id: "newName",
+                          "id-help": "newNameHelp",
+                          "text-help": "Opcional. Informe o nome da Marca",
+                        },
+                      },
+                      [
+                        _c("input", {
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "text",
+                            id: "newName",
+                            "aria-describedby": "newNameHelp",
+                            "aria-placeholder": "Nome da Marca",
+                          },
+                        }),
+                      ]
+                    ),
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "form-group" },
+                  [
+                    _c(
+                      "input-container-component",
+                      {
+                        attrs: {
+                          title: "Imagem",
+                          id: "newImage",
+                          "id-help": "newImageHelp",
+                          "text-help": "Selecioe uma imagem no formato PNG",
+                        },
+                      },
+                      [
+                        _c("input", {
+                          staticClass: "form-control-file",
+                          attrs: {
+                            type: "file",
+                            id: "newImage",
+                            "aria-describedby": "newImageHelp",
+                            "aria-placeholder": "Selecione uma imagem",
+                          },
+                        }),
+                      ]
+                    ),
+                  ],
+                  1
+                ),
+              ]
+            },
+            proxy: true,
+          },
+          {
+            key: "footer",
+            fn: function () {
+              return [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-secondary",
+                    attrs: { type: "button", "data-dismiss": "modal" },
+                  },
+                  [_vm._v("Fechar")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  { staticClass: "btn btn-primary", attrs: { type: "button" } },
+                  [_vm._v("Salvar")]
+                ),
+              ]
+            },
+            proxy: true,
+          },
+        ]),
       }),
     ],
     1
@@ -39029,8 +39141,8 @@ var render = function () {
     },
     [
       _c("div", { staticClass: "modal-dialog" }, [
-        _c("div", { staticClass: "modal-content" }, [
-          _c("div", { staticClass: "modal-header" }, [
+        _c("div", { staticClass: "modal-content " }, [
+          _c("div", { staticClass: "modal-header " }, [
             _c(
               "h5",
               {
@@ -39043,11 +39155,14 @@ var render = function () {
             _vm._m(0),
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "modal-body" }, [
-            _vm._v("\n            ...\n        "),
-          ]),
+          _c(
+            "div",
+            { staticClass: "modal-body card shadow p-3 m-3 bg-white rounded" },
+            [_vm._t("content")],
+            2
+          ),
           _vm._v(" "),
-          _vm._m(1),
+          _c("div", { staticClass: "modal-footer" }, [_vm._t("footer")], 2),
         ]),
       ]),
     ]
@@ -39070,27 +39185,6 @@ var staticRenderFns = [
       },
       [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
     )
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-footer" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-secondary",
-          attrs: { type: "button", "data-dismiss": "modal" },
-        },
-        [_vm._v("Fechar")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        { staticClass: "btn btn-primary", attrs: { type: "button" } },
-        [_vm._v("Salvar")]
-      ),
-    ])
   },
 ]
 render._withStripped = true
