@@ -8,7 +8,7 @@
                     <card-component title="Busca de Marcas">
                         <template v-slot:contentCard>
                             <div class="form-row ">
-                                
+
                                 <div class="col mb-3">
                                     <input-container-component title="ID" id="inputId" id-help="idHelp" text-help="Opcional. Informe o id do registro" >
                                         <input type="number" class="form-control" id="inputId" aria-describedby="idHelp" aria-placeholder="ID">
@@ -42,7 +42,7 @@
 
                         <template v-slot:footerCard>
                             <div class="card shadow p-1  bg-body rounded">
-                                <button type="button" class="btn btn-primary btn-sm ">Adicionar</button>
+                                <button type="button" class="btn btn-primary btn-sm " data-toggle="modal" data-target="#modalBrand">Adicionar</button>
                             </div>
                         </template>
 
@@ -51,6 +51,7 @@
             </div>
 
         </div>
+        <modal-component id="modalBrand" title="Adiconar Marca"></modal-component>
     </div>
 
 </template>
