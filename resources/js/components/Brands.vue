@@ -37,7 +37,10 @@
                     <card-component title="Relação de Marcas">
 
                         <template v-slot:contentCard>
-                            <table-component></table-component>
+                            <table-component
+                                :data_br="brands"
+                                :title_br="['id', 'name', 'image']"
+                            ></table-component>
                         </template>
 
                         <template v-slot:footerCard>
@@ -118,12 +121,19 @@
         },
         methods: {
             loadList(){
-                // axios.get(this.baseUrl, { headers: { Authorization: this.token  }  })
-                axios.get(this.baseUrl)
+
+                let config = {
+                    headers: {
+                        'Accept': 'application/json',
+                        'Authorization': this.token
+                    }
+                };
+
+                axios.get(this.baseUrl, config)
 
                 .then(response => {
                     this.brands = response.data
-                    console.log(this.brands)
+                    // console.log(this.brands)
                 })
                 .catch(errors => {
                     console.log(errors)
