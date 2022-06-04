@@ -81,6 +81,7 @@
                 </template>
 
             </modal-component>
+
         <!-- fim do modal  -->
     </div>
 
@@ -112,10 +113,23 @@
                 fileImage : [],
                 transactionStatus: '', // responsavel pela direção do fluxo de Alertas
                 transactionDetails: {},
+                brands: [],
             }
         },
         methods: {
+            loadList(){
+                // axios.get(this.baseUrl, { headers: { Authorization: this.token  }  })
+                axios.get(this.baseUrl)
 
+                .then(response => {
+                    this.brands = response.data
+                    console.log(this.brands)
+                })
+                .catch(errors => {
+                    console.log(errors)
+                })
+
+            },
             loadImage(e) {
                 this.fileImage = e.target.files[0];
             },
@@ -151,6 +165,10 @@
                         // console.log(.data.message);
                     });
             }
+        },
+        mounted() {
+            this.loadList()
         }
+
     }
 </script>
