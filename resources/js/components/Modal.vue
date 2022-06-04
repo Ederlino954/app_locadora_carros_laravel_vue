@@ -10,6 +10,7 @@
                     </button>
                 </div>
             <div class="modal-body card shadow p-3 m-3 bg-white rounded">
+                <slot name="alerts"></slot>
                 <slot name="content"></slot>
             </div>
                 <div class="modal-footer">

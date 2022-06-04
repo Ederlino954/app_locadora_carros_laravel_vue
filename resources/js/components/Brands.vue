@@ -51,36 +51,43 @@
             </div>
 
         </div>
+        <!-- início do modal  -->
+            <modal-component id="modalBrand" title="Adiconar Marca">
 
-        <modal-component id="modalBrand" title="Adiconar Marca">
+                <template v-slot:alerts>
+                    <alert-component type="success" :details="transactionDetails" titleB="Cadastro realizado com sucesso!" v-if="transactionStatus == 'added'"></alert-component>
+                    <alert-component type="danger" :details="transactionDetails" titleB="Erro ao tentar cadastrar a Marca" v-if="transactionStatus == 'error'"></alert-component>
+                </template>
 
-            <template v-slot:content>
-                <div class="form-group">
-                    <input-container-component title="Nome da Marca" id="newName" id-help="newNameHelp" text-help="Opcional. Informe o nome da Marca" >
-                        <input type="text" class="form-control" id="newName" aria-describedby="newNameHelp" aria-placeholder="Nome da Marca" v-model="nameBrand">
-                    </input-container-component>
-                    {{ nameBrand }}
-                </div>
+                <template v-slot:content>
+                    <div class="form-group">
+                        <input-container-component title="Nome da Marca" id="newName" id-help="newNameHelp" text-help="Opcional. Informe o nome da Marca" >
+                            <input type="text" class="form-control" id="newName" aria-describedby="newNameHelp" aria-placeholder="Nome da Marca" v-model="nameB">
+                        </input-container-component>
+                        {{ nameB }}
+                    </div>
 
-                <div class="form-group">
-                    <input-container-component title="Imagem" id="newImage" id-help="newImageHelp" text-help="Selecioe uma imagem no formato PNG" >
-                        <input type="file" class="form-control-file" id="newImage" aria-describedby="newImageHelp" aria-placeholder="Selecione uma imagem" @change="loadImage($event)">
-                    </input-container-component>
-                    {{ fileImage }}
-                </div>
-            </template>
+                    <div class="form-group">
+                        <input-container-component title="Imagem" id="newImage" id-help="newImageHelp" text-help="Selecioe uma imagem no formato PNG" >
+                            <input type="file" class="form-control-file" id="newImage" aria-describedby="newImageHelp" aria-placeholder="Selecione uma imagem" @change="loadImage($event)">
+                        </input-container-component>
+                        {{ fileImage }}
+                    </div>
+                </template>
 
-            <template v-slot:footer>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary" @click="saveBrand()">Salvar</button>
-            </template>
+                <template v-slot:footer>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-primary" @click="saveBrand()">Salvar</button>
+                </template>
 
-        </modal-component>
+            </modal-component>
+        <!-- fim do modal  -->
     </div>
 
 </template>
 
 <script>
+
     export default {
         computed: {
                 token() {
@@ -100,9 +107,11 @@
         },
         data() {
             return {
-                baseUrl: 'http://127.0.0.1:8000/api/v1/brand',
-                nameBrand: '',
-                fileImage: []
+                baseUrl : 'http://127.0.0.1:8000/api/v1/brand',
+                nameB : '',
+                fileImage : [],
+                transactionStatus: '', // responsavel pela direção do fluxo de Alertas
+                transactionDetails: [],
             }
         },
         methods: {
@@ -113,7 +122,7 @@
             saveBrand() {
 
                 let formData = new FormData();
-                formData.append('name', this.nameBrand);
+                formData.append('name', this.nameB);
                 formData.append('image', this.fileImage);
 
                 let config = {
@@ -126,10 +135,15 @@
 
                 axios.post(this.baseUrl, formData, config)
                     .then(response => {
+                        this.transactionStatus = 'added'
+                        this.transactionDetails = response
                         console.log(response);
                     })
-                    .catch(error => {
-                        console.log(error);
+                    .catch(errors => {
+                        this.transactionStatus = 'error'
+                        this.transactionDetails = errors.response
+                        // console.log(.data.message);
+
                     });
             }
         }
