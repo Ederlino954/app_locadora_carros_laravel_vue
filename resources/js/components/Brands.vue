@@ -111,7 +111,7 @@
                 nameB : '',
                 fileImage : [],
                 transactionStatus: '', // responsavel pela direção do fluxo de Alertas
-                transactionDetails: [],
+                transactionDetails: {},
             }
         },
         methods: {
@@ -136,14 +136,19 @@
                 axios.post(this.baseUrl, formData, config)
                     .then(response => {
                         this.transactionStatus = 'added'
-                        this.transactionDetails = response
+                        this.transactionDetails = {
+                            messageB: 'ID do registro: ' + response.data.id
+                        }
+
                         console.log(response);
                     })
                     .catch(errors => {
                         this.transactionStatus = 'error'
-                        this.transactionDetails = errors.response
+                        this.transactionDetails = {
+                            messageB: errors.response.data.message,
+                            dataB: errors.response.data.errors
+                        }
                         // console.log(.data.message);
-
                     });
             }
         }
