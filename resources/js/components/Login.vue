@@ -5,7 +5,6 @@
             <div class="col-md-8">
                 <!-- {{ xyz }} -│ {{ abc }} -│ {{ abcde }} -│ {{ numeroParcelas }} -->
 
-                {{email}} - {{password}}
 
                 <div class="card">
                     <div class="card-header">Login (Componente Vue)</div>

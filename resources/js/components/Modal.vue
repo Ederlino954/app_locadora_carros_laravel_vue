@@ -23,6 +23,6 @@
 
 <script>
     export default {
-        props: ['id', 'title'],
+        props: ['id', 'title']
     }
 </script>
