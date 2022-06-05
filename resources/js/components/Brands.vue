@@ -39,7 +39,12 @@
                         <template v-slot:contentCard>
                             <table-component
                                 :data_br="brands"
-                                :title_br="['id', 'name', 'image']"
+                                :title_br="{
+                                    id: {title: 'ID', type: 'text'},
+                                    name:{title: 'Nome', type: 'text'},
+                                    image: {title: 'Imagem', type: 'image'},
+                                    created_at:{title: 'Criado em', type: 'data'},
+                                }"
                             ></table-component>
                         </template>
 
