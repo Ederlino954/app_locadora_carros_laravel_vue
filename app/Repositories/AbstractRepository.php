@@ -34,4 +34,8 @@ abstract class AbstractRepository { // pesquisa dinâmica
         return $this->model->get();
     }
 
+    public function getResultPaginate($perPage) {
+        return $this->model->paginate($perPage);
+    }
+
 }

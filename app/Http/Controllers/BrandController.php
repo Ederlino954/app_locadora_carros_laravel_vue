@@ -38,7 +38,7 @@ class BrandController extends Controller
             $brandRepository->selectAttribut($request->attribut);
         }
 
-        return response()->json($brandRepository->getResult(), 200);
+        return response()->json($brandRepository->getResultPaginate(3), 200);
     }
 
     public function store(Request $request)

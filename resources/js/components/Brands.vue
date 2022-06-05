@@ -37,8 +37,9 @@
                     <card-component title="Relação de Marcas">
 
                         <template v-slot:contentCard>
+                            <!-- .data pegando quant de paginate -->
                             <table-component
-                                :data_br="brands"
+                                :data_br="brands.data"
                                 :title_br="{
                                     id: {title: 'ID', type: 'text'},
                                     name:{title: 'Nome', type: 'text'},
@@ -121,29 +122,25 @@
                 fileImage : [],
                 transactionStatus: '', // responsavel pela direção do fluxo de Alertas
                 transactionDetails: {},
-                brands: [],
+                brands: { data: [] }, // [] para evitar erro de carregamento assíncrono
             }
         },
         methods: {
             loadList(){
-
                 let config = {
                     headers: {
                         'Accept': 'application/json',
                         'Authorization': this.token
                     }
                 };
-
                 axios.get(this.baseUrl, config)
-
                 .then(response => {
                     this.brands = response.data
-                    // console.log(this.brands)
+                    console.log(this.brands);
                 })
                 .catch(errors => {
                     console.log(errors)
                 })
-
             },
             loadImage(e) {
                 this.fileImage = e.target.files[0];
