@@ -7,7 +7,7 @@
             <thead>
                 <tr>
                     <th  v-for="t, key in title_br" :key="key">{{t.title}}</th>
-                    <th v-if="view || update || remove "></th>
+                    <th v-if="view.visible || update || remove "></th>
                 </tr>
             </thead>
             <tbody>
@@ -19,9 +19,9 @@
                             <img :src="'/storage/'+value" width="30" height="30">
                         </span>
                     </td>
-                    <td v-if="view || update || remove ">
+                    <td v-if="view.visible || update || remove ">
                         <div class="row ">
-                            <button v-if="view" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#modalBrandView">Visualizar</button>
+                            <button v-if="view.visible" class="btn btn-outline-primary btn-sm" :data-toggle="view.dataToggle" :data-target="view.dataTarget">Visualizar</button>
                             <button v-if="update" class="btn btn-outline-primary btn-sm">Atualizar</button>
                             <button v-if="remove" class="btn btn-outline-danger btn-sm">Remover</button>
                         </div>

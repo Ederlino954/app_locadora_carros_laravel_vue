@@ -40,7 +40,7 @@
                             <!-- .data pegando quant de paginate -->
                             <table-component
                                 :data_br="brands.data"
-                                :view="true"
+                                :view="{ visible: true, dataToggle: 'modal', dataTarget: '#modalBrandView' }"
                                 :update="true"
                                 :remove="true"
                                 :title_br="{
