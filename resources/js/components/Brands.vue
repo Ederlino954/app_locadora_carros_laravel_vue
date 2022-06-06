@@ -124,6 +124,8 @@
         data() {
             return {
                 baseUrl : 'http://127.0.0.1:8000/api/v1/brand',
+                paginateUrl: '',
+                filterUrl : '',
                 nameB : '',
                 fileImage : [],
                 transactionStatus: '', // responsavel pela direção do fluxo de Alertas
@@ -150,23 +152,33 @@
                         filt_b += key + ':like:' + this.search[key]
                     }
                 }
+                // console.log(filt_b);
+                if (filt_b != '') {
+                    this.paginateUrl = 'page=1'
+                    this.filterUrl = '&filt=' + filt_b
+                } else {
+                    this.filterUrl = ''
+                }
 
-                console.log(filt_b);
+                this.loadList()
             },
             pagination(l){
                 if(l.url) {
-                    this.baseUrl = l.url // ajustando a aurl de consulta com o paramentro de página
+                    this.paginateUrl = l.url.split('?')[1]
                     this.loadList() // requisitando novamente os dados para a API
                 }
             },
             loadList(){
+                let url = this.baseUrl + '?' + this.paginateUrl + this.filterUrl
+                console.log(url)
                 let config = {
                     headers: {
                         'Accept': 'application/json',
                         'Authorization': this.token
                     }
                 };
-                axios.get(this.baseUrl, config)
+
+                axios.get(url, config)
                 .then(response => {
                     this.brands = response.data
                     // console.log(this.brands);
