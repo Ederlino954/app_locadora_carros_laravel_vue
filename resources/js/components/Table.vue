@@ -1,7 +1,7 @@
 <template>
 
     <div>
-
+            <!-- {{ $store.state.teste }} teste -->
         <table class="table  table-hover shadow-lg p-3 mb-2 bg-body rounded">
 
             <thead>
