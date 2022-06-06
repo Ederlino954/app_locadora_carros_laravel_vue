@@ -2,11 +2,12 @@
 
     <div>
 
-        <table class="table table-hover shadow-lg p-3 mb-2 bg-body rounded">
+        <table class="table  table-hover shadow-lg p-3 mb-2 bg-body rounded">
 
             <thead>
                 <tr>
                     <th  v-for="t, key in title_br" :key="key">{{t.title}}</th>
+                    <th v-if="view || update || remove "></th>
                 </tr>
             </thead>
             <tbody>
@@ -17,6 +18,13 @@
                         <span v-if="title_br[keyValue].type == 'image'">
                             <img :src="'/storage/'+value" width="30" height="30">
                         </span>
+                    </td>
+                    <td v-if="view || update || remove ">
+                        <div class="row ">
+                            <button v-if="view" class="btn btn-outline-primary btn-sm">Visualizar</button>
+                            <button v-if="update" class="btn btn-outline-primary btn-sm">Atualizar</button>
+                            <button v-if="remove" class="btn btn-outline-danger btn-sm">Remover</button>
+                        </div>
                     </td>
                 </tr>
             </tbody>
@@ -29,7 +37,7 @@
 
 <script>
     export default {
-        props: ['data_br', 'title_br'],
+        props: ['data_br', 'title_br', 'view', 'update', 'remove'],
         computed: {
             filteredData(){
 

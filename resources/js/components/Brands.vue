@@ -40,6 +40,9 @@
                             <!-- .data pegando quant de paginate -->
                             <table-component
                                 :data_br="brands.data"
+                                :view="true"
+                                :update="true"
+                                :remove="true"
                                 :title_br="{
                                     id: {title: 'ID', type: 'text'},
                                     name:{title: 'Nome', type: 'text'},
