@@ -50,9 +50,16 @@
                         </template>
 
                         <template v-slot:footerCard>
-                            <div class="card shadow p-1  bg-body rounded">
-                                <button type="button" class="btn btn-primary btn-sm " data-toggle="modal" data-target="#modalBrand">Adicionar</button>
-                            </div>
+                            <button type="button" class="btn btn-primary btn-sm float-right border mt-1 " data-toggle="modal" data-target="#modalBrand">Adicionar</button>
+                            <paginate-component>
+                                <li v-for="l, key in brands.links" :key="key"
+                                    :class="l.active ? 'page-item active' : 'page-item'"
+                                    @click="pagination(l)"
+                                >
+                                    <a class="page-link" v-html="l.label"></a>
+                                    <!-- {{ l.active }} -->
+                                </li>
+                            </paginate-component>
                         </template>
 
                     </card-component>
@@ -97,7 +104,6 @@
 </template>
 
 <script>
-
     export default {
         computed: {
                 token() {
@@ -126,6 +132,12 @@
             }
         },
         methods: {
+            pagination(l){
+                if(l.url) {
+                    this.baseUrl = l.url // ajustando a aurl de consulta com o paramentro de página
+                    this.loadList() // requisitando novamente os dados para a API
+                }
+            },
             loadList(){
                 let config = {
                     headers: {
@@ -136,7 +148,7 @@
                 axios.get(this.baseUrl, config)
                 .then(response => {
                     this.brands = response.data
-                    console.log(this.brands);
+                    // console.log(this.brands);
                 })
                 .catch(errors => {
                     console.log(errors)
