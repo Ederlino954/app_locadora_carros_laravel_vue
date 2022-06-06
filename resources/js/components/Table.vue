@@ -21,7 +21,7 @@
                     </td>
                     <td v-if="view || update || remove ">
                         <div class="row ">
-                            <button v-if="view" class="btn btn-outline-primary btn-sm">Visualizar</button>
+                            <button v-if="view" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#modalBrandView">Visualizar</button>
                             <button v-if="update" class="btn btn-outline-primary btn-sm">Atualizar</button>
                             <button v-if="remove" class="btn btn-outline-danger btn-sm">Remover</button>
                         </div>

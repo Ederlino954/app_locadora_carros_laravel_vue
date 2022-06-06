@@ -70,7 +70,7 @@
             </div>
 
         </div>
-        <!-- início do modal  -->
+        <!-- início do modal inclusão marca -->
             <modal-component id="modalBrand" title="Adiconar Marca">
 
                 <template v-slot:alerts>
@@ -101,7 +101,26 @@
 
             </modal-component>
 
-        <!-- fim do modal  -->
+        <!-- fim do modal inclusão marca  -->
+
+        <!-- inicio do modal visualização marca  -->
+            <modal-component id="modalBrandView" title="Visualizar Marca">
+
+                <template v-slot:alerts>
+
+                </template>
+
+                <template v-slot:content>
+                    Teste
+                </template>
+
+                <template v-slot:footer>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                </template>
+
+            </modal-component>
+        <!-- fim do modal visualização marca  -->
+
     </div>
 
 </template>
