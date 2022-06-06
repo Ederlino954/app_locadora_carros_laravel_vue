@@ -15,9 +15,9 @@ class TypeController extends Controller
 
     public function index(Request $request )
     {
-        // http://127.0.0.1:8000/api/type/?attribut=id,name
-        // http://127.0.0.1:8000/api/type/?attribut=id,name&attributes_brand=name
-        // http://127.0.0.1:8000/api/type/?attribut=id,name&attributes_brand=name&filt=name:like:h%
+        // http://127.0.0.1:8000/api/v1/type/?attribut=id,name
+        // http://127.0.0.1:8000/api/v1/type/?attribut=id,name&attributes_brand=name
+        // http://127.0.0.1:8000/api/v1/type/?attribut=id,name&attributes_brand=name&filt=name:like:h%
 
         $typeRepository = new TypeRepository($this->type);
 

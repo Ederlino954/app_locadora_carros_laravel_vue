@@ -11,13 +11,13 @@
 
                                 <div class="col mb-3">
                                     <input-container-component title="ID" id="inputId" id-help="idHelp" text-help="Opcional. Informe o id do registro" >
-                                        <input type="number" class="form-control" id="inputId" aria-describedby="idHelp" aria-placeholder="ID">
+                                        <input type="number" class="form-control" id="inputId" aria-describedby="idHelp" aria-placeholder="ID" v-model="search.id" >
                                     </input-container-component>
                                 </div>
 
                                 <div class="col mb-3">
                                     <input-container-component title="Nome da Marca" id="inputNome" id-help="nomeHelp" text-help="Opcional. Informe o nome da Marca" >
-                                        <input type="text" class="form-control" id="inputNome" aria-describedby="nomeHelp" aria-placeholder="Nome da Marca">
+                                        <input type="text" class="form-control" id="inputNome" aria-describedby="nomeHelp" aria-placeholder="Nome da Marca" v-model="search.name">
                                     </input-container-component>
                                 </div>
 
@@ -26,7 +26,7 @@
 
                         <template v-slot:footerCard>
                             <div class="card shadow p-1 mb-2 bg-body rounded">
-                                <button type="submit" class="btn btn-primary btn-sm ">Pesquisar</button>
+                                <button type="submit" class="btn btn-primary btn-sm " @click="search_b()">Pesquisar</button>
                             </div>
                         </template>
 
@@ -116,7 +116,7 @@
                 token = token.split('=')[1];
                 token = token.split('SameSite')[0];
                 token = 'Bearer ' + token
-                console.log(token)
+                // console.log(token)
 
                 return token
             }
@@ -129,9 +129,30 @@
                 transactionStatus: '', // responsavel pela direção do fluxo de Alertas
                 transactionDetails: {},
                 brands: { data: [] }, // [] para evitar erro de carregamento assíncrono
+                search: { id: '', name: '' }
+
             }
         },
         methods: {
+            search_b(){
+                // console.log(this.search)
+
+                let filt_b = ''
+
+                for (let key in this.search) {
+
+                    if(this.search[key]){
+                        // console.log(key, this.search[key]);
+                        if(filt_b != '') {
+                            filt_b += ';'
+                        }
+
+                        filt_b += key + ':like:' + this.search[key]
+                    }
+                }
+
+                console.log(filt_b);
+            },
             pagination(l){
                 if(l.url) {
                     this.baseUrl = l.url // ajustando a aurl de consulta com o paramentro de página

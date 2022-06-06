@@ -15,11 +15,11 @@ class BrandController extends Controller
 
     public function index(Request $request)
     {
-        // http://127.0.0.1:8000/api/brand/?attribut=name,image
-        // http://127.0.0.1:8000/api/brand/?attribut=id,name,image&attributes_types=id,brand_id,name,image
-        // http://127.0.0.1:8000/api/brand/?attribut=id,name,image&attributes_types=id,brand_id,name,image&filt=name:=:Ford
-        // http://127.0.0.1:8000/api/brand/?attribut=id,name,image&attributes_types=id,brand_id,name,image&filt=name:like:h%
-        // http://127.0.0.1:8000/api/brand/?attribut=id,name,image&attributes_types=id,brand_id,name,image&filt=name:like:h%
+        // http://127.0.0.1:8000/api/v1/brand/?attribut=name,image
+        // http://127.0.0.1:8000/api/v1/brand/?attribut=id,name,image&attributes_types=id,brand_id,name,image
+        // http://127.0.0.1:8000/api/v1/brand/?attribut=id,name,image&attributes_types=id,brand_id,name,image&filt=name:=:Ford
+        // http://127.0.0.1:8000/api/v1/brand/?attribut=id,name,image&attributes_types=id,brand_id,name,image&filt=name:like:h%
+        // http://127.0.0.1:8000/api/v1/brand/?attribut=id,name,image&attributes_types=id,brand_id,name,image&filt=name:like:h%
 
         $brandRepository = new BrandRepository($this->brand);
 
