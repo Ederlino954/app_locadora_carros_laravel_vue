@@ -113,7 +113,24 @@
                 </template>
 
                 <template v-slot:content>
-                    Teste
+                    <input-container-component title="ID">
+                        <input type="text" class="form-control" :value="$store.state.item.id" disabled>
+                    </input-container-component>
+
+                    <input-container-component title="Nome da marca">
+                        <input type="text" class="form-control" :value="$store.state.item.name" disabled>
+                    </input-container-component>
+
+                    <div class="card ">
+                        <input-container-component title="Imagem" class="text-center">
+                            <img :src="'/storage/'+$store.state.item.image" v-if="$store.state.item.image"  >
+                        </input-container-component>
+                    </div>
+
+                    <input-container-component title="Criado em">
+                        <input type="text" class="form-control" :value="$store.state.item.created_at" disabled>
+                    </input-container-component>
+
                 </template>
 
                 <template v-slot:footer>
@@ -128,7 +145,9 @@
 </template>
 
 <script>
+import InputContainer from './InputContainer.vue';
     export default {
+  components: { InputContainer },
         computed: {
                 token() {
 

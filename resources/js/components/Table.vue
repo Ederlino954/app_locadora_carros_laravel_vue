@@ -21,7 +21,7 @@
                     </td>
                     <td v-if="view.visible || update || remove ">
                         <div class="row ">
-                            <button v-if="view.visible" class="btn btn-outline-primary btn-sm" :data-toggle="view.dataToggle" :data-target="view.dataTarget">Visualizar</button>
+                            <button v-if="view.visible" class="btn btn-outline-primary btn-sm" :data-toggle="view.dataToggle" :data-target="view.dataTarget" @click="setStore(obj)">Visualizar</button>
                             <button v-if="update" class="btn btn-outline-primary btn-sm">Atualizar</button>
                             <button v-if="remove" class="btn btn-outline-danger btn-sm">Remover</button>
                         </div>
@@ -38,6 +38,13 @@
 <script>
     export default {
         props: ['data_br', 'title_br', 'view', 'update', 'remove'],
+        methods: {
+            setStore(obj) {
+                this.$store.state.item = obj;
+                // console.log(obj);
+                // this.$store.commit('setStore', this.obj)
+            }
+        },
         computed: {
             filteredData(){
 

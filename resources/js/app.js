@@ -15,7 +15,7 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
     state: { // atributos globais da aplicação
-        teste: 'teste de recuperação de valor da store do vuex '
+        item: {} // atributo bem genérico
     }
 })
 
