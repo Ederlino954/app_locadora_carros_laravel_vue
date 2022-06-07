@@ -160,6 +160,7 @@
 
                 <template v-slot:footer>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-danger" @click="remove()">Remover</button>
                 </template>
 
             </modal-component>
@@ -204,6 +205,32 @@ import InputContainer from './InputContainer.vue';
             }
         },
         methods: {
+            remove(){
+                let confirmation = confirm('Deseja realmente remover esta marca?')
+
+                if (!confirmation) return false;
+
+                let formData = new FormData();
+                formData.append('_method', 'DELETE')
+
+                let config = {
+                    headers: {
+                        'Accept': 'application/json',
+                        'Authorization': this.token
+                    }
+                };
+
+                let url = this.baseUrl + '/' + this.$store.state.item.id
+
+                axios.post(url, formData, config)
+                    .then(response => {
+                        console.log('registro removido com sucesso!', response)
+                        this.loadList()
+                    })
+                    .catch(errors => {
+                        console.log('Houve um erro na remoção do registro!', errors.response.data)
+                    })
+            },
             search_b(){
                 // console.log(this.search)
 
