@@ -177,7 +177,7 @@
                 <template v-slot:content>
                     <div class="form-group">
                         <input-container-component title="Nome da Marca" id="updateName" id-help="updateNameHelp" text-help="Informe o nome da Marca" >
-                            <input type="text" class="form-control" id="updateName" aria-describedby="updateNameHelp" aria-placeholder="Nome da Marca" v-model="nameB">
+                            <input type="text" class="form-control" id="updateName" aria-describedby="updateNameHelp" aria-placeholder="Nome da Marca" v-model="$store.state.item.name">
                         </input-container-component>
                     </div>
 
@@ -186,6 +186,8 @@
                             <input type="file" class="form-control-file" id="updateImage" aria-describedby="updateImageHelp" aria-placeholder="Selecione uma imagem" @change="loadImage($event)">
                         </input-container-component>
                     </div>
+
+                    {{ $store.state.item }}
                 </template>
 
                 <template v-slot:footer>
@@ -237,7 +239,37 @@ import InputContainer from './InputContainer.vue';
         },
         methods: {
             update(){
-                console.log(this.$store.state.item)
+
+                let config = {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        'Accept': 'application/json',
+                        'Authorization': this.token
+                    }
+                };
+
+                let formData = new FormData();
+                formData.append('_method', 'patch');
+                formData.append('name', this.$store.state.item.name);
+                formData.append('image', this.fileImage[0]);
+
+                let url = this.baseUrl + '/' + this.$store.state.item.id;
+
+                axios.post(url, formData, config)
+                    .then(response => {
+                        console.log('Atualizado',response)
+                        this.loadList();
+                        // this.transactionStatus = 'success';
+                        // this.transactionDetails = response.data;
+                        // this.getBrands();
+                    })
+                    .catch(errors => {
+                        console.log('Erro de atualização',errors.response)
+                        // this.transactionStatus = 'error';
+                        // this.transactionDetails = error.response.data;
+                    })
+
+
             },
             remove(){
                 let confirmation = confirm('Deseja realmente remover esta marca?')
@@ -315,14 +347,14 @@ import InputContainer from './InputContainer.vue';
                 axios.get(url, config)
                 .then(response => {
                     this.brands = response.data
-                    // console.log(this.brands);
+                    // console.log(this.brands)
                 })
                 .catch(errors => {
                     console.log(errors)
                 })
             },
             loadImage(e) {
-                this.fileImage = e.target.files[0];
+                this.fileImage = e.target.files;
             },
             saveBrand() {
 
