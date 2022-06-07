@@ -7,7 +7,7 @@
             <thead>
                 <tr>
                     <th  v-for="t, key in title_br" :key="key">{{t.title}}</th>
-                    <th v-if="view.visible || update || remove "></th>
+                    <th v-if="view.visible || update || remove.visible "></th>
                 </tr>
             </thead>
             <tbody>
@@ -19,11 +19,11 @@
                             <img :src="'/storage/'+value" width="30" height="30">
                         </span>
                     </td>
-                    <td v-if="view.visible || update || remove ">
+                    <td v-if="view.visible || update || remove.visible ">
                         <div class="row ">
                             <button v-if="view.visible" class="btn btn-outline-primary btn-sm" :data-toggle="view.dataToggle" :data-target="view.dataTarget" @click="setStore(obj)">Visualizar</button>
                             <button v-if="update" class="btn btn-outline-primary btn-sm">Atualizar</button>
-                            <button v-if="remove" class="btn btn-outline-danger btn-sm">Remover</button>
+                            <button v-if="remove.visible" class="btn btn-outline-danger btn-sm" :data-toggle="remove.dataToggle" :data-target="remove.dataTarget" @click="setStore(obj)" >Remover</button>
                         </div>
                     </td>
                 </tr>

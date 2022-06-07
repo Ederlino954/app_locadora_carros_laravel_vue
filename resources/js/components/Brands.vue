@@ -44,7 +44,7 @@
                                 :data_br="brands.data"
                                 :view="{ visible: true, dataToggle: 'modal', dataTarget: '#modalBrandView' }"
                                 :update="true"
-                                :remove="true"
+                                :remove="{ visible: true, dataToggle: 'modal', dataTarget: '#modalBrandRemove' }"
                                 :title_br="{
                                     id: {title: 'ID', type: 'text'},
                                     name:{title: 'Nome', type: 'text'},
@@ -139,6 +139,31 @@
 
             </modal-component>
         <!-- fim do modal visualização marca  -->
+
+        <!-- inicio do modal remoção marca  -->
+            <modal-component id="modalBrandRemove" title="Remover Marca">
+
+                <template v-slot:alerts>
+
+                </template>
+
+                <template v-slot:content>
+                    <input-container-component title="ID">
+                        <input type="text" class="form-control" :value="$store.state.item.id" disabled>
+                    </input-container-component>
+
+                    <input-container-component title="Nome da marca">
+                        <input type="text" class="form-control" :value="$store.state.item.name" disabled>
+                    </input-container-component>
+
+                </template>
+
+                <template v-slot:footer>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                </template>
+
+            </modal-component>
+        <!-- fim do modal remoção marca  -->
 
     </div>
 
