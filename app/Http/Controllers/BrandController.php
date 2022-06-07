@@ -95,25 +95,19 @@ class BrandController extends Controller
             $request->validate($brand->rules(), $brand->feedback());
         }
 
-        // remove um arquivo antigo caso tenha sido enviado uma imagem no request
-        if ($request->file('image')) {
+        // preencer oobjeto $brand com os dados do request
+        $brand->fill($request->all());
+
+        // se a imagem foi encaminhada na requisição
+        if($request->file('image')){
             Storage::disk('public')->delete($brand->image);
+
+            $image = $request->file('image');
+            $image_urn = $image->store('images', 'public');
+            $brand->image = $image_urn;
         }
 
-        $image = $request->file('image');
-        $image_urn = $image->store('images', 'public');
-
-        // preencher o objetop brand com os dados do request
-        $brand->fill($request->all());
-        $brand->image = $image_urn;
         $brand->save();
-
-        // dd($brand->getAttributes());
-        // $brand->update([
-        //     'name' => $request->name,
-        //     'image' => $image_urn,
-        // ]);
-
         return response()->json($brand, 200);
     }
 
@@ -132,3 +126,4 @@ class BrandController extends Controller
         return response()->json(['msg' => 'A marca foi removida com sucesso!'], 200);
     }
 }
+

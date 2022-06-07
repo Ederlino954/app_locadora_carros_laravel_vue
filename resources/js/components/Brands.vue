@@ -249,24 +249,24 @@ import InputContainer from './InputContainer.vue';
                 };
 
                 let formData = new FormData();
-                formData.append('_method', 'patch');
-                formData.append('name', this.$store.state.item.name);
-                formData.append('image', this.fileImage[0]);
+                formData.append('_method', 'patch')
+                formData.append('name', this.$store.state.item.name)
+
+                if ('image', this.fileImage[0]) {
+                    formData.append('image', this.fileImage[0])
+                }
 
                 let url = this.baseUrl + '/' + this.$store.state.item.id;
 
                 axios.post(url, formData, config)
                     .then(response => {
                         console.log('Atualizado',response)
-                        this.loadList();
-                        // this.transactionStatus = 'success';
-                        // this.transactionDetails = response.data;
-                        // this.getBrands();
+
+                        updateImage.value = '' // limpa o campo de seleção de arquivos utilizando o id do input
+                        this.loadList()
                     })
                     .catch(errors => {
                         console.log('Erro de atualização',errors.response)
-                        // this.transactionStatus = 'error';
-                        // this.transactionDetails = error.response.data;
                     })
 
 
