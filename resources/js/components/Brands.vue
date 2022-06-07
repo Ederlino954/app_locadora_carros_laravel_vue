@@ -12,13 +12,13 @@
                             <div class="form-row ">
 
                                 <div class="col mb-3">
-                                    <input-container-component title="ID" id="inputId" id-help="idHelp" text-help="Opcional. Informe o id do registro" >
+                                    <input-container-component title="ID" id="inputId" id-help="idHelp" text-help="Informe o id do registro" >
                                         <input type="number" class="form-control" id="inputId" aria-describedby="idHelp" aria-placeholder="ID" v-model="search.id" >
                                     </input-container-component>
                                 </div>
 
                                 <div class="col mb-3">
-                                    <input-container-component title="Nome da Marca" id="inputNome" id-help="nomeHelp" text-help="Opcional. Informe o nome da Marca" >
+                                    <input-container-component title="Nome da Marca" id="inputNome" id-help="nomeHelp" text-help="Informe o nome da Marca" >
                                         <input type="text" class="form-control" id="inputNome" aria-describedby="nomeHelp" aria-placeholder="Nome da Marca" v-model="search.name">
                                     </input-container-component>
                                 </div>
@@ -34,7 +34,7 @@
 
                     </card-component>
                 <!-- fim do card de busca -->
-
+                <!-- -------------------------------- -->
                 <!-- inicio do card de listagem de marcas -->
                     <card-component title="Relação de Marcas">
 
@@ -43,7 +43,7 @@
                             <table-component
                                 :data_br="brands.data"
                                 :view="{ visible: true, dataToggle: 'modal', dataTarget: '#modalBrandView' }"
-                                :update="true"
+                                :update="{ visible: true, dataToggle: 'modal', dataTarget: '#modalBrandUpdate' }"
                                 :remove="{ visible: true, dataToggle: 'modal', dataTarget: '#modalBrandRemove' }"
                                 :title_br="{
                                     id: {title: 'ID', type: 'text'},
@@ -82,7 +82,7 @@
 
                 <template v-slot:content>
                     <div class="form-group">
-                        <input-container-component title="Nome da Marca" id="newName" id-help="newNameHelp" text-help="Opcional. Informe o nome da Marca" >
+                        <input-container-component title="Nome da Marca" id="newName" id-help="newNameHelp" text-help="Informe o nome da Marca" >
                             <input type="text" class="form-control" id="newName" aria-describedby="newNameHelp" aria-placeholder="Nome da Marca" v-model="nameB">
                         </input-container-component>
                         {{ nameB }}
@@ -104,7 +104,7 @@
             </modal-component>
 
         <!-- fim do modal inclusão marca  -->
-
+        <!-- ---------------------------------- -->
         <!-- inicio do modal visualização marca  -->
             <modal-component id="modalBrandView" title="Visualizar Marca">
 
@@ -113,6 +113,7 @@
                 </template>
 
                 <template v-slot:content>
+
                     <input-container-component title="ID">
                         <input type="text" class="form-control" :value="$store.state.item.id" disabled>
                     </input-container-component>
@@ -123,7 +124,7 @@
 
                     <div class="card ">
                         <input-container-component title="Imagem" class="text-center">
-                            <img :src="'/storage/'+$store.state.item.image" v-if="$store.state.item.image"  >
+                            <img :src="'/storage/'+$store.state.item.image" v-if="$store.state.item.image">
                         </input-container-component>
                     </div>
 
@@ -139,15 +140,16 @@
 
             </modal-component>
         <!-- fim do modal visualização marca  -->
-
+        <!-- -------------------------------- -->
         <!-- inicio do modal remoção marca  -->
             <modal-component id="modalBrandRemove" title="Remover Marca">
 
                 <template v-slot:alerts>
-
+                    <alert-component type="success"  titleB="Transação realizada com sucesso!" :details="$store.state.transaction" v-if="$store.state.transaction.status == 'success'"></alert-component>
+                    <alert-component type="danger"  titleB="Erro ao tentar fazer a transação" :details="$store.state.transaction" v-if="$store.state.transaction.status == 'error'"></alert-component>
                 </template>
 
-                <template v-slot:content>
+                <template v-slot:content v-if="$store.state.transaction.status != 'success'">
                     <input-container-component title="ID">
                         <input type="text" class="form-control" :value="$store.state.item.id" disabled>
                     </input-container-component>
@@ -160,11 +162,40 @@
 
                 <template v-slot:footer>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                    <button type="button" class="btn btn-danger" @click="remove()">Remover</button>
+                    <button type="button" class="btn btn-danger" @click="remove()" v-if="$store.state.transaction.status != 'success'">Remover</button>
                 </template>
 
             </modal-component>
-        <!-- fim do modal remoção marca  -->
+        <!-- fim do modal remoção marca   -->
+        <!-- ------------------------------ -->
+        <!-- início do modal atualização marca -->
+            <modal-component id="modalBrandUpdate" title="Atualizar Marca">
+
+                <template v-slot:alerts>
+                </template>
+
+                <template v-slot:content>
+                    <div class="form-group">
+                        <input-container-component title="Nome da Marca" id="updateName" id-help="updateNameHelp" text-help="Informe o nome da Marca" >
+                            <input type="text" class="form-control" id="updateName" aria-describedby="updateNameHelp" aria-placeholder="Nome da Marca" v-model="nameB">
+                        </input-container-component>
+                    </div>
+
+                    <div class="form-group">
+                        <input-container-component title="Imagem" id="updateImage" id-help="updateImageHelp" text-help="Selecioe uma imagem no formato PNG" >
+                            <input type="file" class="form-control-file" id="updateImage" aria-describedby="updateImageHelp" aria-placeholder="Selecione uma imagem" @change="loadImage($event)">
+                        </input-container-component>
+                    </div>
+                </template>
+
+                <template v-slot:footer>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-primary" @click="update()">Atualizar</button>
+                </template>
+
+            </modal-component>
+
+        <!-- fim do modal atualização marca  -->
 
     </div>
 
@@ -205,6 +236,9 @@ import InputContainer from './InputContainer.vue';
             }
         },
         methods: {
+            update(){
+                console.log(this.$store.state.item)
+            },
             remove(){
                 let confirmation = confirm('Deseja realmente remover esta marca?')
 
@@ -221,14 +255,19 @@ import InputContainer from './InputContainer.vue';
                 };
 
                 let url = this.baseUrl + '/' + this.$store.state.item.id
+                // let url = this.baseUrl + '/12450' // teste
 
                 axios.post(url, formData, config)
                     .then(response => {
-                        console.log('registro removido com sucesso!', response)
+                        // console.log('registro removido com sucesso!', response)
+                        this.$store.state.transaction.status = 'success'
+                        this.$store.state.transaction.message = response.data.msg
                         this.loadList()
                     })
                     .catch(errors => {
-                        console.log('Houve um erro na remoção do registro!', errors.response.data)
+                        // console.log('Houve um erro na remoção do registro!', errors.response)
+                        this.$store.state.transaction.status = 'error'
+                        this.$store.state.transaction.message = errors.response.data.erro
                     })
             },
             search_b(){
@@ -265,7 +304,7 @@ import InputContainer from './InputContainer.vue';
             },
             loadList(){
                 let url = this.baseUrl + '?' + this.paginateUrl + this.filterUrl
-                console.log(url)
+                // console.log(url)
                 let config = {
                     headers: {
                         'Accept': 'application/json',
@@ -303,15 +342,16 @@ import InputContainer from './InputContainer.vue';
                     .then(response => {
                         this.transactionStatus = 'added'
                         this.transactionDetails = {
-                            messageB: 'ID do registro: ' + response.data.id
+                            // messageB: 'ID do registro: ' + response.data.id,
+                            message: 'nome do registro cadastrado: ' + response.data.name
                         }
 
-                        console.log(response);
+                        // console.log(response);
                     })
                     .catch(errors => {
                         this.transactionStatus = 'error'
                         this.transactionDetails = {
-                            messageB: errors.response.data.message,
+                            message: errors.response.data.message,
                             dataB: errors.response.data.errors
                         }
                         // console.log(.data.message);

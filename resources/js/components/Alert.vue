@@ -2,9 +2,9 @@
     <div :class="style" role="alert">
         {{ titleB }}
         <hr>
-        <p>{{ details.messageB }}</p>
-        <br>
+        <p>{{ details.message }}</p>
         <ul v-if="details.dataB">
+            <br>
             <li v-for="e, key in details.dataB" :key="key"> {{e[0]}} </li>
         </ul>
     </div>

@@ -27,7 +27,7 @@ class CreateRentsTable extends Migration
 
             //foreign key (constraints)
             $table->foreign('client_id')->references('id')->on('clients');
-            $table->foreign('car_id')->references('id')->on('cars');
+            $table->foreign('car_id')->references('id')->on('cars')->onDelete('cascade'); //cascade: se o carro for deletado, todos os alugueis associados a ele também serão deletados
         });
     }
 
