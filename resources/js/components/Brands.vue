@@ -339,7 +339,6 @@ import InputContainer from './InputContainer.vue';
             },
             loadList(){
                 let url = this.baseUrl + '?' + this.paginateUrl + this.filterUrl
-                // console.log(url)
                 let config = {
                     headers: {
                         'Accept': 'application/json',
@@ -350,7 +349,6 @@ import InputContainer from './InputContainer.vue';
                 axios.get(url, config)
                 .then(response => {
                     this.brands = response.data
-                    // console.log(this.brands)
                 })
                 .catch(errors => {
                     console.log(errors)
@@ -380,8 +378,6 @@ import InputContainer from './InputContainer.vue';
                             // messageB: 'ID do registro: ' + response.data.id,
                             message: 'nome do registro cadastrado: ' + response.data.name
                         }
-
-                        // console.log(response);
                     })
                     .catch(errors => {
                         this.transactionStatus = 'error'
@@ -389,7 +385,6 @@ import InputContainer from './InputContainer.vue';
                             message: errors.response.data.message,
                             dataB: errors.response.data.errors
                         }
-                        // console.log(.data.message);
                     });
             }
         },
