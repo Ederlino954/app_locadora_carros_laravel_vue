@@ -42,13 +42,13 @@
             setStore(obj) {
                 this.$store.state.transaction.status = ''  /// limpando as mensagens de alerta
                 this.$store.state.transaction.message = ''
+                this.$store.state.transaction.dataB = ''
                 this.$store.state.item = obj
             }
         },
         computed: {
             filteredData(){
-
-                console.log(this.data_br);
+                // console.log(this.data_br);
                 let fields = Object.keys(this.title_br); // pegando a chaves dos objetos
                 let filteredData = []
 

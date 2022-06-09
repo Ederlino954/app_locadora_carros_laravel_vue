@@ -172,6 +172,8 @@
             <modal-component id="modalBrandUpdate" title="Atualizar Marca">
 
                 <template v-slot:alerts>
+                    <alert-component type="success"  titleB="Transação realizada com sucesso!" :details="$store.state.transaction" v-if="$store.state.transaction.status == 'success'"></alert-component>
+                    <alert-component type="danger"  titleB="Erro ao tentar fazer a transação" :details="$store.state.transaction" v-if="$store.state.transaction.status == 'error'"></alert-component>
                 </template>
 
                 <template v-slot:content>
@@ -187,7 +189,6 @@
                         </input-container-component>
                     </div>
 
-                    {{ $store.state.item }}
                 </template>
 
                 <template v-slot:footer>
@@ -260,13 +261,15 @@ import InputContainer from './InputContainer.vue';
 
                 axios.post(url, formData, config)
                     .then(response => {
-                        console.log('Atualizado',response)
-
+                         this.$store.state.transaction.status = 'success'
+                        this.$store.state.transaction.message = 'registro de marca atualizado com suceso!'
                         updateImage.value = '' // limpa o campo de seleção de arquivos utilizando o id do input
                         this.loadList()
                     })
                     .catch(errors => {
-                        console.log('Erro de atualização',errors.response)
+                        this.$store.state.transaction.status = 'error'
+                        this.$store.state.transaction.message = errors.response.data.message
+                        this.$store.state.transaction.dataB = errors.response.data.errors
                     })
 
 

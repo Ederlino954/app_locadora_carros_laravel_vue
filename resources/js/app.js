@@ -16,7 +16,7 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
     state: { // atributos globais da aplicação
         item: {}, // atributo bem genérico
-        transaction: { status: '', message: '' }
+        transaction: { status: '', message: '', dataB: '' }
     }
 })
 
