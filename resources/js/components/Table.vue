@@ -14,7 +14,9 @@
                 <tr v-for="obj, key_br in filteredData" :key="key_br">
                     <td v-for="value, keyValue in obj" :key="keyValue">
                         <span v-if="title_br[keyValue].type == 'text'">{{value}}</span>
-                        <span v-if="title_br[keyValue].type == 'data'">{{'....'+value}}</span>
+                        <span v-if="title_br[keyValue].type == 'data'">
+                            {{ value | formatDateTimeGlobal }}
+                        </span>
                         <span v-if="title_br[keyValue].type == 'image'">
                             <img :src="'/storage/'+value" width="30" height="30">
                         </span>

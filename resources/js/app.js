@@ -8,6 +8,7 @@ require('./bootstrap');
 
 window.Vue = require('vue').default;
 
+import Vue from 'vue';
 // Importando e configurando o vuex
 import Vuex from 'vuex'
 
@@ -47,6 +48,27 @@ Vue.component('paginate-component', require('./components/Paginate.vue').default
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+
+Vue.filter('formatDateTimeGlobal', function (d) {
+
+    if (!d) return '';
+
+    d = d.split('T')
+
+    let date = d[0]
+    let time = d[1]
+
+    //formatando a data
+    date = date.split('-')
+    date = date[2] + '/' + date[1] + '/' + date[0]
+
+    //formatando a hora
+    time = time.split('.')
+    time = time[0]
+
+    return date + '  ' + time;
+    
+});
 
 const app = new Vue({
     el: '#app',
