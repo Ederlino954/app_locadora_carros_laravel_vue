@@ -208,22 +208,6 @@
 import InputContainer from './InputContainer.vue';
     export default {
   components: { InputContainer },
-        computed: {
-                token() {
-
-                // recuperando os tokens de autorização dos kookies
-                let token = document.cookie.split(';').find(indice => {
-                    return indice.includes('token=') // true quando o indice inicia com token=
-                })
-
-                token = token.split('=')[1];
-                token = token.split('SameSite')[0];
-                token = 'Bearer ' + token
-                // console.log(token)
-
-                return token
-            }
-        },
         data() {
             return {
                 baseUrl : 'http://127.0.0.1:8000/api/v1/brand',
@@ -243,9 +227,7 @@ import InputContainer from './InputContainer.vue';
 
                 let config = {
                     headers: {
-                        'Content-Type': 'multipart/form-data',
-                        'Accept': 'application/json',
-                        'Authorization': this.token
+                        'Content-Type': 'multipart/form-data'
                     }
                 };
 
@@ -282,31 +264,21 @@ import InputContainer from './InputContainer.vue';
                 let formData = new FormData();
                 formData.append('_method', 'DELETE')
 
-                let config = {
-                    headers: {
-                        'Accept': 'application/json',
-                        'Authorization': this.token
-                    }
-                };
-
                 let url = this.baseUrl + '/' + this.$store.state.item.id
                 // let url = this.baseUrl + '/12450' // teste
 
-                axios.post(url, formData, config)
+                axios.post(url, formData)
                     .then(response => {
-                        // console.log('registro removido com sucesso!', response)
                         this.$store.state.transaction.status = 'success'
                         this.$store.state.transaction.message = response.data.msg
                         this.loadList()
                     })
                     .catch(errors => {
-                        // console.log('Houve um erro na remoção do registro!', errors.response)
                         this.$store.state.transaction.status = 'error'
                         this.$store.state.transaction.message = errors.response.data.erro
                     })
             },
             search_b(){
-                // console.log(this.search)
 
                 let filt_b = ''
 
@@ -339,14 +311,8 @@ import InputContainer from './InputContainer.vue';
             },
             loadList(){
                 let url = this.baseUrl + '?' + this.paginateUrl + this.filterUrl
-                let config = {
-                    headers: {
-                        'Accept': 'application/json',
-                        'Authorization': this.token
-                    }
-                };
 
-                axios.get(url, config)
+                axios.get(url)
                 .then(response => {
                     this.brands = response.data
                 })
@@ -365,9 +331,7 @@ import InputContainer from './InputContainer.vue';
 
                 let config = {
                     headers: {
-                        'Content-Type': 'multipart/form-data',
-                        'Accept': 'application/json',
-                        'Authorization': this.token
+                        'Content-Type': 'multipart/form-data'
                     }
                 };
 
