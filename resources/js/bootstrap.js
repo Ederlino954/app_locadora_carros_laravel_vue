@@ -58,7 +58,7 @@ axios.interceptors.request.use(
         token = 'Bearer ' + token
 
         config.headers.Authorization = token
-        
+
         console.log('interceptando request', config)
         return config
     },
@@ -75,7 +75,20 @@ axios.interceptors.response.use(
         return response
     },
     error => {
-        console.log('Erro na resposta', error)
+        console.log('Erro na resposta', error.response)
+
+        if (error.response.status == 401 && error.response.data.message == "Token has expired") {
+            console.log("fazer uma nova requisição para a rota refresh")
+
+            axios.post('http://127.0.0.1:8000/api/refresh')
+                .then(response => {
+                    console.log("refresh com sucesso!", response)
+
+                    document.cookie = 'token='+response.data.token
+                    // console.log('Token atualizado: ', response.data.token )
+                    window.location.reload()
+                })
+        }
         return Promise.reject(error)
     }
 )
